@@ -1,6 +1,6 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {Icbackbutton} from '../../../assets/icon';
+import {BackButton} from '../../../assets/icon';
 
 const index = ({
   label,
@@ -13,7 +13,7 @@ const index = ({
   if (type === 'icon-only') {
     return (
       <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
-        {icon === 'icon-back' && <Icbackbutton />}
+        {icon === 'icon-back' && <BackButton />}
       </TouchableOpacity>
     );
   }
