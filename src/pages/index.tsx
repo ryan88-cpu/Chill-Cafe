@@ -3,8 +3,17 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Home from './Home';
 import Payment from './Payment';
-import Menu from
+import Menu from './Menu';
 
+// Named exports tetap tersedia (opsional)
+export { SplashScreen, SignIn, SignUp, Home, Payment, Menu };
 
-
-export {SplashScreen, SignIn, SignUp, Home, Payment, Menu};
+// Default export object supaya bisa di-import sebagai one default
+export default {
+  SplashScreen,
+  SignIn,
+  SignUp,
+  Home,
+  Payment,
+  Menu,
+};

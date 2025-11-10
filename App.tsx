@@ -1,16 +1,11 @@
-
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import Router from './src/router';
 
-import './src/config/Firebase';
-
-const App = () => {
-  return(
+export default function App() {
+  return (
     <NavigationContainer>
-        <Router />
+      <Router />
     </NavigationContainer>
-  )
-};
-
-export default App;
+  );
+}

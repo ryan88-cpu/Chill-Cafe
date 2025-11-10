@@ -1,38 +1,17 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {
-  Home,
-  SplashScreen,
-  SignIn,
-  SignUp,
-} from '../pages';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Pages from '../pages'; // default import from pages index
 
+const { SplashScreen, SignIn, SignUp, Home } = Pages;
 const Stack = createNativeStackNavigator();
-const index = () => {
+
+export default function Router() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="SplashScreen"
-        component={SplashScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="SignIn"
-        component={SignIn}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUp}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{headerShown: false}}
-      />
+    <Stack.Navigator initialRouteName="SplashScreen" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="SplashScreen" component={SplashScreen} />
+      <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );
-};
-
-export default index;
+}
