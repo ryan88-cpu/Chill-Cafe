@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View, TouchableOpacity, Image, TextInput} from 'react-native';
 import React from 'react';
-import { BackButton, SearchIcon, Profile } from '../../../assets/icon';
+import { BackButton, Notifikasi, Profile } from '../../../assets/icon';
 
 interface HeaderProps {
   title?: string;
@@ -30,7 +30,7 @@ const Header = ({
       {type === 'profile' && (
         <View style={styles.rightSection}>
           <TouchableOpacity onPress={onNotificationPress}>
-            <Image source={SearchIcon} style={styles.icon} />
+            <Image source={Notifikasi} style={styles.icon} />
           </TouchableOpacity>
           <Image source={profileImage || Profile} style={styles.profileImage} />
         </View>
@@ -42,7 +42,7 @@ const Header = ({
             <Text style={styles.title}>{title}</Text>
             <View style={styles.rightSection}>
               <TouchableOpacity onPress={onNotificationPress}>
-                <Image source={SearchIcon} style={styles.icon} />
+                <Image source={Notifikasi} style={styles.icon} />
               </TouchableOpacity>
               <Image source={profileImage || Profile} style={styles.profileImage} />
             </View>
@@ -50,13 +50,12 @@ const Header = ({
 
           {/* Search Bar */}
           <View style={styles.searchContainer}>
-            <Image source={SearchIcon} style={styles.searchIcon} />
+            <Image source={Notifikasi} style={styles.searchIcon} />
             <TextInput
               placeholder="Search"
               placeholderTextColor="#9E9E9E"
               style={styles.searchInput}
             />
-            {/* Note: mic icon needs to be added to assets if needed */}
           </View>
         </View>
       )}
@@ -93,6 +92,7 @@ const styles = StyleSheet.create({
     height: 38,
     borderRadius: 19,
     backgroundColor: '#E0E0E0',
+    marginLeft: 12,
   },
   topRow: {
     flexDirection: 'row',
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     width: 22,
     height: 22,
     resizeMode: 'contain',
-    tintColor: '#FFC107', // warna kuning lembut (optional)
+    tintColor: '#FFC107',
   },
   searchIcon: {
     width: 20,
