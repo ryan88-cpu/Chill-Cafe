@@ -9,10 +9,6 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-<<<<<<< HEAD
-=======
-import Header from '../../components/molecules/Header';
->>>>>>> 2d06d4ad8534592ca16d58253199789488f9cee8
 import TextInput from '../../components/molecules/TextInput';
 import Button from '../../components/atoms/Button';
 import { Gap } from '../../components/atoms';
