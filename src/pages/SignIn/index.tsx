@@ -8,11 +8,13 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Image,
 } from 'react-native';
 import TextInput from '../../components/molecules/TextInput';
 import Button from '../../components/atoms/Button';
 import { Gap } from '../../components/atoms';
 import { useNavigation } from '@react-navigation/native';
+import { GoogleBG, AppleBG } from '../../assets/images';
 
 export default function SignIn() {
   const navigation = useNavigation();
@@ -56,14 +58,16 @@ export default function SignIn() {
 
             <Gap height={16} />
             <TouchableOpacity style={styles.socialButton} activeOpacity={0.7}>
-              <View style={styles.logoPlaceholder} />
+              <View />
+               <Image source={GoogleBG} style={styles.socialLogo} />
               <Text style={styles.socialText}>Continue with Google</Text>
             </TouchableOpacity>
 
             <Gap height={12} />
 
             <TouchableOpacity style={styles.socialButton} activeOpacity={0.7}>
-              <View style={styles.logoPlaceholder} />
+              <View/>
+              <Image source={AppleBG} style={styles.socialLogo} />
               <Text style={styles.socialText}>Continue with Apple</Text>
             </TouchableOpacity>
 
@@ -101,6 +105,12 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
     alignItems: 'center',
   },
+  socialLogo: {
+    width: 22,
+    height: 22,
+    resizeMode: 'contain',
+    marginRight: 12,
+  },
   card: {
     width: '100%',
     backgroundColor: '#FFFFFF',
@@ -108,7 +118,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#EEE',
     padding: 18,
-    // shadow
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.06,
@@ -149,15 +158,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 12,
     borderRadius: 8,
-  },
-  logoPlaceholder: {
-    width: 22,
-    height: 22,
-    borderRadius: 6,
-    backgroundColor: '#FFFFFF',
-    borderWidth: 0.5,
-    borderColor: '#DDD',
-    marginRight: 12,
   },
   socialText: {
     color: '#424242',

@@ -46,7 +46,7 @@ export default function SignUp() {
               label="Submit"
               backgroundColor="#FFC107"
               textColor="#000"
-              onPress={() => navigation.navigate('Home' as never)}
+              onPress={() => navigation.navigate('SignIn' as never)}
             />
           </View>
 
