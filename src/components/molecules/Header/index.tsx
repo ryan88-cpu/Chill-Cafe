@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View, TouchableOpacity, Image, TextInput} from 'react-native';
 import React from 'react';
-import { BackButton, Notifikasi, Profile } from '../../../assets/icon';
+import { BackButton, Notifikasi, Profile, SearchIcon } from '../../../assets/icon';
 
 interface HeaderProps {
   title?: string;
@@ -24,9 +24,17 @@ const Header = ({
         <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
           <Image source={BackButton} style={styles.icon} />
         </TouchableOpacity>
+      ) : type === 'profile' ? (
+        <View style={styles.leftSection}>
+          <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
+            <Image source={BackButton} style={styles.icon} />
+          </TouchableOpacity>
+          <Text style={styles.title}>{title}</Text>
+        </View>
       ) : (
         <Text style={styles.title}>{title}</Text>
       )}
+
       {type === 'profile' && (
         <View style={styles.rightSection}>
           <TouchableOpacity onPress={onNotificationPress}>
@@ -42,7 +50,7 @@ const Header = ({
             <Text style={styles.title}>{title}</Text>
             <View style={styles.rightSection}>
               <TouchableOpacity onPress={onNotificationPress}>
-                <Image source={Notifikasi} style={styles.icon} />
+                <Image source={SearchIcon} style={styles.icon} />
               </TouchableOpacity>
               <Image source={profileImage || Profile} style={styles.profileImage} />
             </View>
@@ -50,7 +58,7 @@ const Header = ({
 
           {/* Search Bar */}
           <View style={styles.searchContainer}>
-            <Image source={Notifikasi} style={styles.searchIcon} />
+            <Image source={SearchIcon} style={styles.searchIcon} />
             <TextInput
               placeholder="Search"
               placeholderTextColor="#9E9E9E"
@@ -75,8 +83,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  leftSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   backButton: {
-    paddingRight: 10,
+    paddingRight: 12,
   },
   title: {
     fontFamily: 'Poppins-Bold',

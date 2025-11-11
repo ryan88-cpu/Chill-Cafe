@@ -10,7 +10,7 @@ import {
   TextInput,
   FlatList,
 } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import Header from '../../components/molecules/Header';
 import Button from '../../components/atoms/Button';
 import { Gap } from '../../components/atoms';
@@ -20,10 +20,11 @@ import {
   HumbergerBG,
   CafeLatteBG,
 } from '../../assets/images';
-import { SearchIcon } from '../../assets/icon';
+import { Notifikasi, SearchIcon } from '../../assets/icon';
 
 const Menu = () => {
   const route = useRoute();
+  const navigation = useNavigation();
   const type = (route.params as any)?.type || 'food';
   const [cart, setCart] = useState<any[]>([]);
 
@@ -72,9 +73,13 @@ const Menu = () => {
 
   return (
     <SafeAreaView style={styles.safe}>
+      <Header 
+        type="profile"
+        title="Menu"
+        onBackPress={() => navigation.goBack()}
+      />
+      
       <ScrollView contentContainerStyle={styles.container}>
-        <Header type="profile" title="Chill Cafe" />
-
         <Gap height={20} />
 
         {/* Search Bar */}
@@ -163,6 +168,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     marginRight: 8,
+    tintColor: '#9E9E9E',
   },
   searchInput: {
     flex: 1,

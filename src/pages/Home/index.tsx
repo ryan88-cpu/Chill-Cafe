@@ -36,7 +36,7 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={styles.container}>
-        {/* <Header style={styles.headerTitle} type="none" title="Chill Cafe" /> */}
+     
 
         <Gap height={32} />
 
