@@ -2,7 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Pages from '../pages'; // default import from pages index
 
-const { SplashScreen, SignIn, SignUp, Home, Menu, Checkout, Payment } = Pages;
+const { SplashScreen, SignIn, SignUp, Home, Menu, Checkout, Payment, Confirm } = Pages;
 const Stack = createNativeStackNavigator();
 
 export default function Router() {
@@ -14,7 +14,8 @@ export default function Router() {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="Checkout" component={Checkout} />
-      <Stack.Screen name="Payment" component={Pages.Payment} />
+      <Stack.Screen name="Payment" component={Payment} />
+      <Stack.Screen name="Confirm" component={Confirm} />
     </Stack.Navigator>
   );
 }

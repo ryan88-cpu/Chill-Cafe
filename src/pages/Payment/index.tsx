@@ -1,4 +1,3 @@
-
 import React, {useState} from 'react';
 import {
   SafeAreaView,
@@ -51,8 +50,8 @@ const Payment = () => {
             backgroundColor="#FFC107"
             textColor="#000"
             onPress={() => {
-              // lanjutkan ke proses payment / konfirmasi
-              // contoh: navigation.navigate('Checkout' as never, { paymentMethod: selected } as never)
+              // lanjutkan ke halaman konfirmasi payment
+              navigation.navigate('Confirm' as never, { paymentMethod: selected } as never);
             }}
           />
         </View>
