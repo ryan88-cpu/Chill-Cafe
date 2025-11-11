@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
     color: '#3E2723',
     paddingVertical: 10,
     paddingHorizontal: 14,
-    backgroundColor: '#FFF8E1', // tone krem lembut
+    backgroundColor: '#ffffffff', // tone krem lembut
   },
 });

@@ -9,7 +9,6 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import Header from '../../components/molecules/Header';
 import TextInput from '../../components/molecules/TextInput';
 import Button from '../../components/atoms/Button';
 import { Gap } from '../../components/atoms';
@@ -56,8 +55,6 @@ export default function SignIn() {
             </View>
 
             <Gap height={16} />
-
-            {/* Social buttons - logo placeholders. You will insert icons later */}
             <TouchableOpacity style={styles.socialButton} activeOpacity={0.7}>
               <View style={styles.logoPlaceholder} />
               <Text style={styles.socialText}>Continue with Google</Text>
@@ -74,7 +71,7 @@ export default function SignIn() {
 
             <TouchableOpacity
               onPress={() => {
-                /* forgot password handler */
+                
               }}
             >
               <Text style={styles.forgot}>Forgot password?</Text>
