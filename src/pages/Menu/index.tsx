@@ -42,13 +42,22 @@ const Menu = () => {
 
   const addToCart = (item: any) => {
     const existingItem = cart.find(i => i.id === item.id);
+    let newCart;
     if (existingItem) {
-      setCart(cart.map(i =>
+      newCart = cart.map(i =>
         i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-      ));
+      );
     } else {
-      setCart([...cart, { ...item, quantity: 1 }]);
+      newCart = [...cart, { ...item, quantity: 1 }];
     }
+    setCart(newCart);
+    return newCart;
+  };
+
+  // new helper: add item then go to Checkout
+  const addToCartAndGoToCheckout = (item: any) => {
+    const updatedCart = addToCart(item);
+    navigation.navigate('Checkout' as never, { items: updatedCart, type } as never);
   };
 
   const renderMenuItem = ({ item }: any) => (
@@ -59,10 +68,17 @@ const Menu = () => {
         <Text style={styles.menuItemPrice}>Rp {item.price.toLocaleString('id-ID')}</Text>
         <TouchableOpacity
           style={styles.cartButton}
-          onPress={() => addToCart(item)}
+          onPress={() => {
+            // tambahkan ke cart (tetap di page) — jika mau langsung ke checkout, pakai addToCartAndGoToCheckout
+            addToCart(item);
+          }}
         >
           <Text style={styles.cartIcon}>🛒</Text>
         </TouchableOpacity>
+
+        {/* jika ingin keranjang langsung buka Checkout saat tap icon, ganti onPress di atas menjadi:
+            onPress={() => addToCartAndGoToCheckout(item)}
+        */}
       </View>
     </View>
   );
@@ -137,7 +153,8 @@ const Menu = () => {
           backgroundColor="#FFC107"
           textColor="#000"
           onPress={() => {
-            /* navigate to payment */
+            // navigasi ke Checkout, kirim items dan current type
+            navigation.navigate('Checkout' as never, { items: cart, type } as never);
           }}
         />
       </ScrollView>
