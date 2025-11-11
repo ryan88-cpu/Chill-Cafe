@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Pages from '../pages'; // default import from pages index
+import Pages from '../pages'; 
 
 const { SplashScreen, SignIn, SignUp, Home, Menu, Checkout, Payment, Confirm } = Pages;
 const Stack = createNativeStackNavigator();
