@@ -8,4 +8,5 @@ import MenuBG from './img-menuBG.png';
 import CafeLatteBG from './img-cafelatte.png';
 import AppleBG from './img-apple.png';
 import GoogleBG from './img-google.png';
-export { FoodBG, DrinkBG, NasgorBG, HumbergerBG, MenuBG, CafeLatteBG, AppleBG, GoogleBG };
+import Avatar from './img-avatar.png';
+export { FoodBG, DrinkBG, NasgorBG, HumbergerBG, MenuBG, CafeLatteBG, AppleBG, GoogleBG, Avatar };
