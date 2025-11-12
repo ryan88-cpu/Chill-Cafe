@@ -22,8 +22,8 @@ const Checkout = () => {
   const type: string = params.type || 'food';
 
   const subtotal = items.reduce((s, it) => s + (it.price || 0) * (it.quantity || 1), 0);
-  const shipping = items.length ? 0 : 0; // sesuai gambar: Free
-  const taxes = subtotal ? Math.round(subtotal * 0.07) : 0; // contoh tax 7%
+  const shipping = 0;
+  const taxes = subtotal ? Math.round(subtotal * 0.07) : 0;
   const total = subtotal + shipping + taxes;
 
   const renderItem = ({ item }: any) => (
@@ -44,7 +44,6 @@ const Checkout = () => {
       <ScrollView contentContainerStyle={styles.container}>
         <Gap height={12} />
 
-        {/* Payment & Promos (static layout mirip gambar) */}
         <View style={styles.row}>
           <Text style={styles.label}>PAYMENT</Text>
           <Text style={styles.value}>BCA *1234</Text>
@@ -90,10 +89,13 @@ const Checkout = () => {
           backgroundColor="#FFC107"
           textColor="#000"
           onPress={() => {
-            // behavior: jika type == 'drink' bisa navigasi ke checkout drink spesifik, dsb.
-            // Untuk sekarang tampil alert / navigate ke payment page (implementasi nanti)
-            // contoh: navigation.navigate('Payment', { items, type } as never)
-            navigation.navigate('Payment' as never);
+            navigation.navigate('Payment' as never, { 
+              items, 
+              type, 
+              total: total,
+              subtotal: subtotal, 
+              taxes: taxes 
+            } as never);
           }}
         />
       </ScrollView>

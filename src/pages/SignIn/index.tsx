@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -15,9 +15,33 @@ import Button from '../../components/atoms/Button';
 import { Gap } from '../../components/atoms';
 import { useNavigation } from '@react-navigation/native';
 import { GoogleBG, AppleBG } from '../../assets/images';
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import { showMessage } from 'react-native-flash-message';
 
 export default function SignIn() {
   const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const onSubmit = () => {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+    .then(userCredential => {
+      const user = userCredential.user;
+      navigation.navigate('Home', {uid: user.uid});
+      showMessage({
+        message: 'Sign In Successfuly',
+        type: 'success',
+      });
+      
+    })
+    .catch(error => {
+      const errorMessage = error.message;
+      showMessage({
+        message: errorMessage,
+        type: 'danger',
+      });
+    });
+  };
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -36,16 +60,16 @@ export default function SignIn() {
 
             <Gap height={20} />
 
-            <TextInput label="Username" placeholder="Insert Username" />
+            <TextInput label="Email" placeholder="Insert Email" value={email} onChangeText={value=>setEmail(value)}  />
             <Gap height={1} />
-            <TextInput label="Password" placeholder="Insert Password" secureTextEntry />
+            <TextInput label="Password" placeholder="Insert Password" secureTextEntry ={true}  value={password} onChangeText={value=>setPassword(value)} />
 
             <Gap height={18} />
             <Button
               label="Sign In"
               backgroundColor="#FFC107"
               textColor="#000"
-              onPress={() => navigation.navigate('Home' as never)}
+              onPress={onSubmit}
             />
 
             <Gap height={18} />
