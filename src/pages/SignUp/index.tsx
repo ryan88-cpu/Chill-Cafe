@@ -17,20 +17,21 @@ import { useNavigation } from '@react-navigation/native';
 import { Avatar } from '../../assets/images';
 import {launchImageLibrary} from 'react-native-image-picker';
 import { showMessage } from 'react-native-flash-message';
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
+import {getDatabase, ref, set} from 'firebase/database';
 export default function SignUp() {
   const navigation = useNavigation();
   const [photo, setPhoto] = useState(Avatar)
   const [photoForDB, setPhotoForDB] = useState('')
-  const [emailAddress, setEmailAddress] = useState('');
+  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [retypePassword, setRetypePassword] = useState('');
+  const [retypepassword, setRetypePassword] = useState('');
 
   const getImage = async() => {
     const result = await launchImageLibrary({
-      
-      imageHeight: 100,
-      imageWidth: 100,
+      imageHeight: 80,
+      imageWidth: 80,
       quality:0.5,
       includeBase64:true,
     })
@@ -51,13 +52,31 @@ export default function SignUp() {
   };
     const onSubmit = () => {
       const data = { 
-        email: emailAddress,
+        email: email,
         username: username,
         password: password,
-        retypePassword: retypePassword,
+        retypepassword: retypepassword,
         photo: photoForDB,
     };
-    console.log(data);
+    const auth = getAuth();
+     const db = getDatabase();
+    createUserWithEmailAndPassword(auth, email, password )
+    .then(userCredential => {
+      const user = userCredential.user;
+      set(ref(db, 'users/' + user.uid), data);
+       showMessage({
+        message: 'Account created successfully',
+        type: 'success',
+      });
+      navigation.navigate('SignIn' as never);
+    })
+    .catch(error => {
+      const errorMessage = error.message;
+      showMessage({
+        message: errorMessage,
+        type: 'danger',
+      });
+    });
   };
   return (
     <SafeAreaView style={styles.safe}>
@@ -73,21 +92,21 @@ export default function SignUp() {
           <View style={styles.card}>
             <Text style={styles.title}>Create an Account</Text>
              <Gap height={24} />
-             <View style={styles.addPhoto}>
+             {/* <View style={styles.addPhoto}>
               <TouchableOpacity  activeOpacity={0.5} onPress={getImage}>
                   <Image source={photo} style={styles.avatarPhoto}/>
               </TouchableOpacity>
-             </View>
+             </View> */}
 
             <Gap height={24} />
 
-            <TextInput label="Email address" placeholder="Insert email...." value={emailAddress} onChangeText={value=>setEmailAddress(value)} />
+            <TextInput label="Email address" placeholder="Insert email...." value={email} onChangeText={value=>setEmail(value)} />
             <Gap height={12} />
             <TextInput label="Username" placeholder="Insert username...." value={username} onChangeText={value=> setUsername(value)} />
             <Gap height={12} />
             <TextInput label="Password" placeholder="Insert password...." secureTextEntry={true} value={password} onChangeText={value => setPassword(value)}/>
             <Gap height={12} />
-            <TextInput label="Re-type password" placeholder="Insert password...." secureTextEntry={true} value={retypePassword} onChangeText={value => setRetypePassword(value)}/>
+            <TextInput label="Re-type password" placeholder="Insert password...." secureTextEntry={true} value={retypepassword} onChangeText={value => setRetypePassword(value)}/>
 
             <Gap height={24} />
             <Button
