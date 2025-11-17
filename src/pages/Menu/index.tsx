@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,19 +14,39 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import Header from '../../components/molecules/Header';
 import Button from '../../components/atoms/Button';
 import { Gap } from '../../components/atoms';
-import {
-  MenuBG,
-  NasgorBG,
-  HumbergerBG,
-  CafeLatteBG,
-} from '../../assets/images';
-import { Notifikasi, SearchIcon } from '../../assets/icon';
+import { MenuBG, NasgorBG, HumbergerBG, CafeLatteBG } from '../../assets/images';
+import { SearchIcon } from '../../assets/icon';
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, get } from 'firebase/database';
 
 const Menu = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const type = (route.params as any)?.type || 'food';
+
   const [cart, setCart] = useState<any[]>([]);
+  const [userPhoto, setUserPhoto] = useState<string | null>(null);
+
+  // Fetch user data from Firebase (photo)
+  useEffect(() => {
+    const auth = getAuth();
+    const db = getDatabase();
+    const user = auth.currentUser;
+
+    if (user) {
+      const userRef = ref(db, 'users/' + user.uid);
+      get(userRef)
+        .then(snapshot => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            setUserPhoto(data.photo || null);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching user photo:', error);
+        });
+    }
+  }, []);
 
   const foodItems = [
     { id: 1, name: 'Hamburger', price: 25000, image: HumbergerBG, category: 'Fast Food' },
@@ -54,7 +74,6 @@ const Menu = () => {
     return newCart;
   };
 
-  // new helper: add item then go to Checkout
   const addToCartAndGoToCheckout = (item: any) => {
     const updatedCart = addToCart(item);
     navigation.navigate('Checkout' as never, { items: updatedCart, type } as never);
@@ -68,33 +87,27 @@ const Menu = () => {
         <Text style={styles.menuItemPrice}>Rp {item.price.toLocaleString('id-ID')}</Text>
         <TouchableOpacity
           style={styles.cartButton}
-          onPress={() => {
-            // tambahkan ke cart (tetap di page) — jika mau langsung ke checkout, pakai addToCartAndGoToCheckout
-            addToCart(item);
-          }}
-        >
+          onPress={() => addToCart(item)}>
           <Text style={styles.cartIcon}>🛒</Text>
         </TouchableOpacity>
-
-        {/* jika ingin keranjang langsung buka Checkout saat tap icon, ganti onPress di atas menjadi:
-            onPress={() => addToCartAndGoToCheckout(item)}
-        */}
       </View>
     </View>
   );
 
-  const categories = type === 'food'
-    ? ['Fast Food', 'Local Food', 'International Food']
-    : ['Espresso', 'Latte', 'Cappuccino', 'Cafe Latte'];
+  const categories =
+    type === 'food'
+      ? ['Fast Food', 'Local Food', 'International Food']
+      : ['Espresso', 'Latte', 'Cappuccino', 'Cafe Latte'];
 
   return (
     <SafeAreaView style={styles.safe}>
-      <Header 
+      <Header
         type="profile"
         title="Menu"
         onBackPress={() => navigation.goBack()}
+        imageSource={userPhoto ? { uri: userPhoto } : undefined}
       />
-      
+
       <ScrollView contentContainerStyle={styles.container}>
         <Gap height={20} />
 
@@ -120,14 +133,12 @@ const Menu = () => {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={styles.categoryScroll}
-        >
+          style={styles.categoryScroll}>
           {categories.map((category, index) => (
             <TouchableOpacity
               key={index}
               style={styles.categoryTag}
-              activeOpacity={0.7}
-            >
+              activeOpacity={0.7}>
               <Text style={styles.categoryText}>{category}</Text>
             </TouchableOpacity>
           ))}
@@ -152,10 +163,9 @@ const Menu = () => {
           label="Check Out"
           backgroundColor="#FFC107"
           textColor="#000"
-          onPress={() => {
-            // navigasi ke Checkout, kirim items dan current type
-            navigation.navigate('Checkout' as never, { items: cart, type } as never);
-          }}
+          onPress={() =>
+            navigation.navigate('Checkout' as never, { items: cart, type } as never)
+          }
         />
       </ScrollView>
     </SafeAreaView>

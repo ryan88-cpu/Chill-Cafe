@@ -92,11 +92,11 @@ export default function SignUp() {
           <View style={styles.card}>
             <Text style={styles.title}>Create an Account</Text>
              <Gap height={24} />
-             {/* <View style={styles.addPhoto}>
+             <View style={styles.addPhoto}>
               <TouchableOpacity  activeOpacity={0.5} onPress={getImage}>
                   <Image source={photo} style={styles.avatarPhoto}/>
               </TouchableOpacity>
-             </View> */}
+             </View>
 
             <Gap height={24} />
 
